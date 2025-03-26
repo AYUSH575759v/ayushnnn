@@ -1,0 +1,48 @@
+#!/bin/bash
+
+# Display current date and time
+date
+
+# Display present working directory
+pwd
+
+# List files and directories
+ls -l
+
+# Create new files
+touch file1.txt file2.txt
+
+# Write content to a file and display it
+echo "Hello, this is a sample file." > file1.txt
+cat file1.txt
+
+# Count words, lines, and characters in a file
+wc file1.txt
+
+# Copy a file
+cp file1.txt copy_file.txt
+ls -l
+
+# Rename (move) a file
+mv copy_file.txt renamed_file.txt
+ls -l
+
+# Remove a file
+rm renamed_file.txt
+ls -l
+
+# Create a directory
+mkdir test_folder
+ls -l
+
+# Change into the new directory
+cd test_folder
+pwd
+
+# Return to previous directory
+cd ..
+pwd
+
+# Remove the directory
+rmdir test_folder
+ls -l
