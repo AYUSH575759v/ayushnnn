@@ -1,0 +1,45 @@
+#include <stdio.h>
+
+// Function to find the largest of three numbers
+int findLargest(int a, int b, int c) {
+    if (a >= b && a >= c)
+        return a;
+    else if (b >= a && b >= c)
+        return b;
+    else
+        return c;
+}
+
+// Function to calculate factorial
+long long factorial(int num) {
+    long long fact = 1;
+    for (int i = 1; i <= num; i++) {
+        fact *= i;
+    }
+    return fact;
+}
+
+int main() {
+    int num1, num2, num3, numFact;
+
+    // Taking input for largest number
+    printf("Enter three numbers: ");
+    scanf("%d %d %d", &num1, &num2, &num3);
+
+    // Finding and displaying the largest number
+    int largest = findLargest(num1, num2, num3);
+    printf("The largest number is: %d\n", largest);
+
+    // Taking input for factorial calculation
+    printf("Enter a number to find its factorial: ");
+    scanf("%d", &numFact);
+
+    // Calculating and displaying factorial
+    if (numFact < 0) {
+        printf("Factorial of a negative number is not defined.\n");
+    } else {
+        printf("Factorial of %d is: %lld\n", numFact, factorial(numFact));
+    }
+
+    return 0;
+}
