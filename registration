@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website</title>
+    <style>
+        h1 {
+            color: red;
+            text-align: center;
+            background-color: gray;
+            font-size: 40px;
+            padding: 10px;
+        }
+
+        form {
+            text-align: center;
+            background-color: tomato;
+            font-size: 20px;
+            padding: 20px;
+            width: 50%;
+            margin: auto;
+            border-radius: 10px;
+        }
+
+        input {
+            padding: 5px;
+            margin: 5px;
+            width: 80%;
+        }
+
+        input[type="submit"] {
+            background-color: green;
+            color: white;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: darkgreen;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Registration Page</h1>
+
+    <form method="post">
+        First Name: <input type="text" name="fname" required><br>
+        Last Name: <input type="text" name="sname" required><br>
+        Email: <input type="email" name="mail" required><br>
+        Phone no.: <input type="text" name="phone" required><br>
+        Address: <input type="text" name="addr" required><br>
+        Date of Birth: <input type="date" name="dob" required><br>
+        <input type="submit" name="sb" value="Submit">
+    </form>
+
+    <?php
+    // Database connection
+    $con = mysqli_connect('localhost', 'root', '', 'Lyit56');
+
+    // Check connection
+    if (!$con) {
+        die("<p style='text-align:center; color:red;'>Connection failed: " . mysqli_connect_error() . "</p>");
+    }
+
+    // Check if form is submitted
+    if (isset($_POST['sb'])) {
+        $fname = $_POST['fname'];
+        $sname = $_POST['sname'];
+        $email = $_POST['mail'];
+        $phone = $_POST['phone'];
+        $addr = $_POST['addr'];
+        $dob = $_POST['dob'];
+
+        // Prevent SQL Injection
+        $fname = mysqli_real_escape_string($con, $fname);
+        $sname = mysqli_real_escape_string($con, $sname);
+        $email = mysqli_real_escape_string($con, $email);
+        $phone = mysqli_real_escape_string($con, $phone);
+        $addr = mysqli_real_escape_string($con, $addr);
+        $dob = mysqli_real_escape_string($con, $dob);
+
+        // Insert query
+        $query = "INSERT INTO registration56 (fname, sname, email, phone, addr, dob) 
+                  VALUES ('$fname', '$sname', '$email', '$phone', '$addr', '$dob')";
+        $execute = mysqli_query($con, $query);
+
+        if ($execute) {
+            echo "<p style='text-align:center; color:green;'>Data successfully inserted!</p>";
+        } else {
+            echo "<p style='text-align:center; color:red;'>Error: " . mysqli_error($con) . "</p>";
+        }
+    }
+
+    // Close connection
+    mysqli_close($con);
+    ?>
+</body>
+
+</html>
