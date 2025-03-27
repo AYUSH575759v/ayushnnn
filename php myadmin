@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>My Website</title>
+</head>
+
+<body>
+
+    <h1>Welcome to my classes</h1>
+
+    <form method="post">
+        Name: <input type="text" name="name" required><br><br>
+        Email: <input type="email" name="mail" required><br><br>
+        Password: <input type="password" name="pass" required><br><br>
+        <input type="submit" name="sb" value="Submit">
+    </form>
+
+    <?php
+    // Establish database connection
+    $con = mysqli_connect('localhost', 'root', '', 'collegelb');
+
+    // Check connection
+    if (!$con) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
+
+    // Check if form is submitted
+    if (isset($_POST['sb'])) {
+        $name = $_POST['name'];
+        $email = $_POST['mail'];
+        $password = $_POST['pass'];
+
+        // Secure the input data to prevent SQL injection
+        $name = mysqli_real_escape_string($con, $name);
+        $email = mysqli_real_escape_string($con, $email);
+        $password = mysqli_real_escape_string($con, $password);
+
+        // Insert data into database
+        $query = "INSERT INTO mydata20 (name, email, password) VALUES ('$name', '$email', '$password')";
+        $execute = mysqli_query($con, $query);
+
+        if ($execute) {
+            echo "<p>Data successfully inserted!</p>";
+        } else {
+            echo "<p>Error: " . mysqli_error($con) . "</p>";
+        }
+    }
+
+    // Close connection
+    mysqli_close($con);
+    ?>
+</body>
+
+</html>
