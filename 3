@@ -1,0 +1,43 @@
+#!/bin/bash
+
+# Define variables
+USER_NAME="newuser"
+GROUP_NAME="newgroup"
+PASSWORD="SecurePass123"
+FILE_NAME="securefile.txt"
+
+# Create a new user (if not exists)
+if ! id "$USER_NAME" &>/dev/null; then
+    sudo useradd -m -s /bin/bash "$USER_NAME"
+    echo "$USER_NAME:$PASSWORD" | sudo chpasswd
+    echo "User $USER_NAME created with a password."
+else
+    echo "User $USER_NAME already exists."
+fi
+
+# Create a new group (if not exists)
+if ! getent group "$GROUP_NAME" >/dev/null; then
+    sudo groupadd "$GROUP_NAME"
+    echo "Group $GROUP_NAME created."
+else
+    echo "Group $GROUP_NAME already exists."
+fi
+
+# Add the user to the group
+sudo usermod -aG "$GROUP_NAME" "$USER_NAME"
+echo "User $USER_NAME added to group $GROUP_NAME."
+
+# Create a file and set ownership & permissions
+touch "$FILE_NAME"
+sudo chown "$USER_NAME:$GROUP_NAME" "$FILE_NAME"
+sudo chmod 640 "$FILE_NAME"
+echo "File $FILE_NAME created with user $USER_NAME as owner and group $GROUP_NAME."
+
+# Display user details
+echo "User Information:"
+id "$USER_NAME"
+
+# Display file permissions
+ls -l "$FILE_NAME"
+
+echo "Script execution completed."
