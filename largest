@@ -42,4 +42,8 @@ int main() {
     }
 
     return 0;
-}
+}  
+
+gcc largest_factorial.c -o largest_factorial
+
+./largest_factorial
